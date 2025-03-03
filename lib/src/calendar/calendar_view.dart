@@ -23,47 +23,50 @@ class CalendarView extends StatelessWidget {
     int startDateNum = 3;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('2025 Calendar'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Navigator.restorablePushNamed(context, SettingsView.routeName);
-            },
-          ),
-        ],
-      ),
-      body: GridView.builder(
-        padding: EdgeInsets.all(10),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 7,
-          childAspectRatio: 1,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 4,
-        ),
-        itemCount: 31 + startDateNum,
-        itemBuilder: (context, index) {
-          // DateTime date = dates[index];
-          if (index < startDateNum) {
-            return Container();
-          }
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(8),
+        appBar: AppBar(
+          title: const Text('2025 Calendar'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.restorablePushNamed(context, SettingsView.routeName);
+              },
             ),
-            child: Center(
-              child: Text(
-                (index - startDateNum + 1).toString(),
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+          ],
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 7,
+                childAspectRatio: 1,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index < startDateNum) {
+                    return Container();
+                  }
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: Text(
+                        (index - startDateNum + 1).toString(),
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                childCount: 31 + startDateNum,
               ),
             ),
-          );
-        },
-      ),
-    );
+          ],
+        ));
   }
 }
