@@ -1,0 +1,6 @@
+{
+  "appTitle": "weight_cal",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
