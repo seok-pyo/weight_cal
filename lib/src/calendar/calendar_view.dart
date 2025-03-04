@@ -15,23 +15,41 @@ class CalendarView extends StatelessWidget {
       body: Row(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Mon'),
-                // VerticalDivider(
-                //   thickness: 2,
-                //   color: Colors.black,
-                //   width: 20,
-                // ),
-                Text('Tue'),
-                Text('Wed'),
-                Text('Thu'),
-                Text('Fri'),
-                Text('Sat'),
-                Text('Sun'),
-                SizedBox(),
+                Container(
+                  height: 34,
+                ),
+                ...List.generate(
+                  7,
+                  (index) {
+                    List<String> weekdays = [
+                      'sun',
+                      'mon',
+                      'tue',
+                      'wed',
+                      'thu',
+                      'fri',
+                      'sat',
+                    ];
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.1,
+                      alignment: Alignment.topLeft,
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text(
+                            weekdays[index],
+                            style: const TextStyle(fontSize: 18),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -67,7 +85,7 @@ class MakeCalendar extends StatelessWidget {
         for (int i = 1; i <= (startWeekday % 7); i++) {
           week.add(
             Container(
-              height: 100,
+              height: MediaQuery.of(context).size.height * 0.1,
               padding: const EdgeInsets.all(4),
             ),
           );
@@ -77,7 +95,7 @@ class MakeCalendar extends StatelessWidget {
         for (int day = 1; day <= daysInMonth; day++) {
           week.add(
             Container(
-              height: 100,
+              height: MediaQuery.of(context).size.height * 0.1,
               padding: const EdgeInsets.all(4),
               child: Column(
                 children: [
@@ -108,20 +126,24 @@ class MakeCalendar extends StatelessWidget {
 
         return Padding(
           padding: EdgeInsets.only(right: 30),
-          child: Row(
-            spacing: 25,
-            children: [
-              // Text(
-              //   '${monthStart.month}월',
-              //   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              // ),
-              for (var week in weeks)
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: week,
-                ),
-            ],
-          ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(
+              '${monthStart.month}월',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 25,
+              children: [
+                for (var week in weeks)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: week,
+                  ),
+              ],
+            ),
+          ]),
         );
       },
     );
