@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case CalendarView.routeName:
-                    return CalendarView();
+                    return CalendarView(year: 2025);
                   case SampleItemListView.routeName:
                   default:
                     return const SampleItemListView();

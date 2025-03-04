@@ -1,72 +1,129 @@
+// import 'package:weight_cal/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
-import 'package:weight_cal/src/settings/settings_view.dart';
 
 class CalendarView extends StatelessWidget {
-  final DateTime startDate = DateTime(2025, 1, 1);
-  final DateTime endDate = DateTime(2025, 12, 31);
-
-  List<DateTime> generateDates(DateTime start, DateTime end) {
-    List<DateTime> dates = [];
-    for (int i = 0; i <= end.difference(start).inDays; i++) {
-      dates.add(start.add(Duration(days: i)));
-    }
-    return dates;
-  }
+  final int year;
 
   static const routeName = '/';
 
-  CalendarView({super.key});
+  const CalendarView({super.key, required this.year});
 
   @override
   Widget build(BuildContext context) {
-    // List<DateTime> dates = generateDates(startDate, endDate);
-    int startDateNum = 3;
-
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('2025 Calendar'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                Navigator.restorablePushNamed(context, SettingsView.routeName);
-              },
+      appBar: AppBar(title: Text('$year Calendar')),
+      body: Row(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('Mon'),
+                // VerticalDivider(
+                //   thickness: 2,
+                //   color: Colors.black,
+                //   width: 20,
+                // ),
+                Text('Tue'),
+                Text('Wed'),
+                Text('Thu'),
+                Text('Fri'),
+                Text('Sat'),
+                Text('Sun'),
+                SizedBox(),
+              ],
             ),
-          ],
-        ),
-        body: CustomScrollView(
-          slivers: [
-            SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 7,
-                childAspectRatio: 1,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 4,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  if (index < startDateNum) {
-                    return Container();
-                  }
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: Text(
-                        (index - startDateNum + 1).toString(),
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                childCount: 31 + startDateNum,
+          ),
+          Expanded(child: MakeCalendar(year: 2025)),
+        ],
+      ),
+    );
+  }
+}
+
+class MakeCalendar extends StatelessWidget {
+  final int year;
+
+  const MakeCalendar({
+    super.key,
+    required this.year,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: 12,
+      itemBuilder: (context, index) {
+        final monthStart = DateTime(year, index + 1, 1);
+        final daysInMonth = DateUtils.getDaysInMonth(year, index + 1);
+        final startWeekday = monthStart.weekday + 1;
+
+        List<List<Widget>> weeks = [];
+        List<Widget> week = [];
+
+        // 첫 주에 비어있는 날짜를 추가
+        for (int i = 1; i <= (startWeekday % 7); i++) {
+          week.add(
+            Container(
+              height: 100,
+              padding: const EdgeInsets.all(4),
+            ),
+          );
+        }
+
+        // 날짜 추가
+        for (int day = 1; day <= daysInMonth; day++) {
+          week.add(
+            Container(
+              height: 100,
+              padding: const EdgeInsets.all(4),
+              child: Column(
+                children: [
+                  Text(
+                    '$day',
+                    style: const TextStyle(fontSize: 24),
+                  ),
+                  Text(
+                    '80.0',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
               ),
             ),
-          ],
-        ));
+          );
+
+          // 일주일이 끝나면 새 주로 넘어가도록 한다.
+          if ((startWeekday + day) % 7 == 0) {
+            weeks.add(List<Widget>.from(week));
+            week.clear();
+          }
+        }
+
+        // 마지막 주가 남아있을 수 있으므로 추가
+        if (week.isNotEmpty) {
+          weeks.add(week);
+        }
+
+        return Padding(
+          padding: EdgeInsets.only(right: 30),
+          child: Row(
+            spacing: 25,
+            children: [
+              // Text(
+              //   '${monthStart.month}월',
+              //   style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              // ),
+              for (var week in weeks)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: week,
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
