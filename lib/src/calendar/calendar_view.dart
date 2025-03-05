@@ -11,16 +11,26 @@ class CalendarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('$year Calendar')),
+      appBar: AppBar(
+        title: Padding(
+          padding: EdgeInsets.only(top: 25, left: 4),
+          child: Text(
+            '$year년',
+            style: TextStyle(fontSize: 32),
+          ),
+        ),
+        centerTitle: false,
+      ),
       body: Row(
         children: [
+          Expanded(child: MakeCalendar(year: 2025)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 34,
+                  height: 90,
                 ),
                 ...List.generate(
                   7,
@@ -53,7 +63,6 @@ class CalendarView extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(child: MakeCalendar(year: 2025)),
         ],
       ),
     );
@@ -125,23 +134,33 @@ class MakeCalendar extends StatelessWidget {
         }
 
         return Padding(
-          padding: EdgeInsets.only(right: 30),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              '${monthStart.month}월',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Padding(
+              padding: EdgeInsets.only(
+                left: 10,
+                bottom: 20,
+              ),
+              child: Text(
+                '${monthStart.month}월',
+                style:
+                    const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 25,
-              children: [
-                for (var week in weeks)
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: week,
-                  ),
-              ],
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 20,
+                children: [
+                  for (var week in weeks)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: week,
+                    ),
+                ],
+              ),
             ),
           ]),
         );
