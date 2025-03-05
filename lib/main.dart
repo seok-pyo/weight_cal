@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:weight_cal/src/provider/weight_provider.dart';
 
 import 'src/app.dart';
 import 'src/settings/settings_controller.dart';
@@ -16,5 +19,13 @@ void main() async {
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+
+  // hive init
+  await Hive.initFlutter();
+
+  runApp(
+    ChangeNotifierProvider(
+        create: (_) => WeightProvider(),
+        child: MyApp(settingsController: settingsController)),
+  );
 }

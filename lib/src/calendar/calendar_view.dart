@@ -1,5 +1,6 @@
 // import 'package:weight_cal/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:weight_cal/src/details/detail_page.dart';
 
 class CalendarView extends StatelessWidget {
   final int year;
@@ -13,7 +14,7 @@ class CalendarView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Padding(
-          padding: EdgeInsets.only(top: 25, left: 4),
+          padding: EdgeInsets.only(top: 25, left: 10),
           child: Text(
             '$year년',
             style: TextStyle(fontSize: 32),
@@ -25,7 +26,7 @@ class CalendarView extends StatelessWidget {
         children: [
           Expanded(child: MakeCalendar(year: 2025)),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -103,20 +104,40 @@ class MakeCalendar extends StatelessWidget {
         // 날짜 추가
         for (int day = 1; day <= daysInMonth; day++) {
           week.add(
-            Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.all(4),
-              child: Column(
-                children: [
-                  Text(
-                    '$day',
-                    style: const TextStyle(fontSize: 24),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailPage(
+                      date: DateTime(year, index + 1, day),
+                    ),
                   ),
-                  Text(
-                    '80.0',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
+                );
+              },
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                padding: const EdgeInsets.all(4),
+                child: Column(
+                  children: [
+                    Text(
+                      '$day',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+
+                    // Expanded(
+                    //   child: IconButton(
+                    //     iconSize: 20,
+                    //     icon: Icon(Icons.local_fire_department_rounded),
+                    //     onPressed: () {},
+                    //   ),
+                    // ),
+                    // Text(
+                    //   '80.0',
+                    //   style: const TextStyle(fontSize: 18),
+                    // ),
+                  ],
+                ),
               ),
             ),
           );
@@ -134,12 +155,12 @@ class MakeCalendar extends StatelessWidget {
         }
 
         return Padding(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+          padding: EdgeInsets.only(left: 5, right: 10, top: 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
               padding: EdgeInsets.only(
-                left: 10,
+                left: 20,
                 bottom: 20,
               ),
               child: Text(
@@ -152,12 +173,15 @@ class MakeCalendar extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 20,
+                spacing: 15,
                 children: [
                   for (var week in weeks)
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: week,
+                    SizedBox(
+                      width: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: week,
+                      ),
                     ),
                 ],
               ),
