@@ -1,13 +1,21 @@
 // import 'package:weight_cal/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:weight_cal/src/details/detail_page.dart';
+import 'package:weight_cal/src/provider/weight_provider.dart';
+import 'package:weight_cal/src/theme/theme_controller.dart';
 
 class CalendarView extends StatelessWidget {
   final int year;
+  final ThemeController themeController;
 
   static const routeName = '/';
 
-  const CalendarView({super.key, required this.year});
+  const CalendarView({
+    super.key,
+    required this.year,
+    required this.themeController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +28,21 @@ class CalendarView extends StatelessWidget {
             style: TextStyle(fontSize: 32),
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                themeController.updateTheme(
+                  themeController.themeMode == ThemeMode.dark
+                      ? ThemeMode.light
+                      : ThemeMode.dark,
+                );
+              },
+              icon: Icon(
+                themeController.themeMode == ThemeMode.dark
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+              ))
+        ],
         centerTitle: false,
       ),
       body: Row(
@@ -31,7 +54,7 @@ class CalendarView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  height: 90,
+                  height: 85,
                 ),
                 ...List.generate(
                   7,
@@ -124,18 +147,16 @@ class MakeCalendar extends StatelessWidget {
                       '$day',
                       style: const TextStyle(fontSize: 24),
                     ),
-
-                    // Expanded(
-                    //   child: IconButton(
-                    //     iconSize: 20,
-                    //     icon: Icon(Icons.local_fire_department_rounded),
-                    //     onPressed: () {},
-                    //   ),
-                    // ),
-                    // Text(
-                    //   '80.0',
-                    //   style: const TextStyle(fontSize: 18),
-                    // ),
+                    Consumer<WeightProvider>(
+                      builder: (context, value, child) {
+                        double? weight =
+                            value.weights[DateTime(year, index + 1, day)];
+                        return Text(
+                          weight != null ? '$weight' : '',
+                          style: TextStyle(fontSize: 18),
+                        );
+                      },
+                    )
                   ],
                 ),
               ),

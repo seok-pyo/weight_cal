@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:weight_cal/src/calendar/calendar_view.dart';
+import 'package:weight_cal/src/theme/theme_controller.dart';
 
 import 'sample_feature/sample_item_details_view.dart';
 import 'sample_feature/sample_item_list_view.dart';
@@ -12,10 +13,10 @@ import 'settings/settings_view.dart';
 class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
-    required this.settingsController,
+    required this.themeController,
   });
 
-  final SettingsController settingsController;
+  final ThemeController themeController;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
     // The ListenableBuilder Widget listens to the SettingsController for changes.
     // Whenever the user updates their settings, the MaterialApp is rebuilt.
     return ListenableBuilder(
-      listenable: settingsController,
+      listenable: themeController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
           // Providing a restorationScopeId allows the Navigator built by the
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
           // SettingsController to display the correct theme.
           theme: ThemeData(),
           darkTheme: ThemeData.dark(),
-          themeMode: settingsController.themeMode,
+          themeMode: themeController.themeMode,
 
           // Define a function to handle named routes in order to support
           // Flutter web url navigation and deep linking.
@@ -68,12 +69,15 @@ class MyApp extends StatelessWidget {
               settings: routeSettings,
               builder: (BuildContext context) {
                 switch (routeSettings.name) {
-                  case SettingsView.routeName:
-                    return SettingsView(controller: settingsController);
+                  // case SettingsView.routeName:
+                  //   return SettingsView(controller: themeController);
                   case SampleItemDetailsView.routeName:
                     return const SampleItemDetailsView();
                   case CalendarView.routeName:
-                    return CalendarView(year: 2025);
+                    return CalendarView(
+                      year: 2025,
+                      themeController: themeController,
+                    );
                   case SampleItemListView.routeName:
                   default:
                     return const SampleItemListView();

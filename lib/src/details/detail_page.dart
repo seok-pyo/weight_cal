@@ -12,7 +12,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${date.year} - ${date.month} - ${date.day}')),
+      appBar: AppBar(title: Text('${date.year}년 ${date.month}월 ${date.day}일')),
       body: Column(
         children: [
           TextField(
