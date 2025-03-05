@@ -151,9 +151,12 @@ class MakeCalendar extends StatelessWidget {
                       builder: (context, value, child) {
                         double? weight =
                             value.weights[DateTime(year, index + 1, day)];
-                        return Text(
-                          weight != null ? '$weight' : '',
-                          style: TextStyle(fontSize: 18),
+                        return Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            weight != null ? '$weight' : '',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         );
                       },
                     )

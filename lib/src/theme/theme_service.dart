@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class ThemeService {
   Future<ThemeMode> themeMode() async {
     final prefs = await SharedPreferences.getInstance();
-    final themeIndex = prefs.getInt('theme') ?? 0;
+    final themeIndex = prefs.getInt('theme') ?? 1;
     return ThemeMode.values[themeIndex];
   }
 
