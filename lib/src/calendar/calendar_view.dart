@@ -25,7 +25,10 @@ class CalendarView extends StatelessWidget {
           padding: EdgeInsets.only(top: 25, left: 10),
           child: Text(
             '$year년',
-            style: TextStyle(fontSize: 32),
+            style: TextStyle(
+                // fontFamily: 'NotoSans',
+                fontWeight: FontWeight.w400,
+                fontSize: 32),
           ),
         ),
         actions: [
@@ -149,13 +152,14 @@ class MakeCalendar extends StatelessWidget {
                     ),
                     Consumer<WeightProvider>(
                       builder: (context, value, child) {
-                        double? weight =
+                        Object? weight =
                             value.weights[DateTime(year, index + 1, day)];
                         return Padding(
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
-                            weight != null ? '$weight' : '',
+                            weight != null && weight != 0.0 ? '$weight' : '',
                             style: TextStyle(fontSize: 18),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         );
                       },
@@ -190,7 +194,7 @@ class MakeCalendar extends StatelessWidget {
               child: Text(
                 '${monthStart.month}월',
                 style:
-                    const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 32, fontWeight: FontWeight.w700),
               ),
             ),
             Padding(
