@@ -15,6 +15,7 @@ class WeightProvider with ChangeNotifier {
     var box = await Hive.openBox('weights');
     for (var key in box.keys) {
       weights[DateTime.parse(key)] = box.get(key);
+      print(weights[DateTime.parse(key)]);
     }
     notifyListeners();
   }

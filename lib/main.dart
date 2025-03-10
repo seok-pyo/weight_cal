@@ -13,6 +13,7 @@ void main() async {
 
   // hive init
   final directory = await getApplicationDocumentsDirectory();
+  print(directory);
   Hive.init(directory.path);
   await Hive.initFlutter();
 
