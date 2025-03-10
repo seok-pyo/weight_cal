@@ -129,7 +129,9 @@ class _MakeCalendarState extends State<MakeCalendar> {
         final monthStart = DateTime(widget.year, index + 1, 1);
         final daysInMonth = DateUtils.getDaysInMonth(widget.year, index + 1);
         final startWeekday = monthStart.weekday;
-        print(startWeekday);
+        final currentMonth = DateTime.now().month - 1;
+        final currentDay = DateTime.now().day;
+        bool isToday = false;
 
         List<List<Widget>> weeks = [];
         List<Widget> week = [];
@@ -146,6 +148,11 @@ class _MakeCalendarState extends State<MakeCalendar> {
 
         // 날짜 추가
         for (int day = 1; day <= daysInMonth; day++) {
+          if (index == currentMonth && day == currentDay) {
+            isToday = true;
+          } else {
+            isToday = false;
+          }
           week.add(
             GestureDetector(
               onTap: () {
@@ -163,10 +170,32 @@ class _MakeCalendarState extends State<MakeCalendar> {
                 padding: const EdgeInsets.all(4),
                 child: Column(
                   children: [
-                    Text(
-                      '$day',
-                      style: const TextStyle(fontSize: 24),
-                    ),
+                    isToday
+                        ? Center(
+                            child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Text(
+                              '$day',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ))
+                        : Text(
+                            '$day',
+                            // 오늘 색상 표시
+                            style: const TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
                     Consumer<WeightProvider>(
                       builder: (context, value, child) {
                         Object? weight = value
