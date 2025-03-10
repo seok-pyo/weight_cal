@@ -52,7 +52,7 @@ class CalendarView extends StatelessWidget {
         children: [
           Expanded(child: MakeCalendar(year: 2025)),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 3),
+            padding: EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -96,7 +96,7 @@ class CalendarView extends StatelessWidget {
   }
 }
 
-class MakeCalendar extends StatefulWidget {
+class MakeCalendar extends StatelessWidget {
   final int year;
 
   const MakeCalendar({
@@ -105,31 +105,14 @@ class MakeCalendar extends StatefulWidget {
   });
 
   @override
-  State<MakeCalendar> createState() => _MakeCalendarState();
-}
-
-class _MakeCalendarState extends State<MakeCalendar> {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    final currentMonth = DateTime.now().month - 1;
-    _pageController = PageController(initialPage: currentMonth);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      // pageSnapping: false,
-      controller: _pageController,
+    return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: 12,
       itemBuilder: (context, index) {
-        final monthStart = DateTime(widget.year, index + 1, 1);
-        final daysInMonth = DateUtils.getDaysInMonth(widget.year, index + 1);
-        final startWeekday = monthStart.weekday;
-        print(startWeekday);
+        final monthStart = DateTime(year, index + 1, 1);
+        final daysInMonth = DateUtils.getDaysInMonth(year, index + 1);
+        final startWeekday = monthStart.weekday + 1;
 
         List<List<Widget>> weeks = [];
         List<Widget> week = [];
@@ -153,7 +136,7 @@ class _MakeCalendarState extends State<MakeCalendar> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => DetailPage(
-                      date: DateTime(widget.year, index + 1, day),
+                      date: DateTime(year, index + 1, day),
                     ),
                   ),
                 );
@@ -169,8 +152,8 @@ class _MakeCalendarState extends State<MakeCalendar> {
                     ),
                     Consumer<WeightProvider>(
                       builder: (context, value, child) {
-                        Object? weight = value
-                            .weights[DateTime(widget.year, index + 1, day)];
+                        Object? weight =
+                            value.weights[DateTime(year, index + 1, day)];
                         return Padding(
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
@@ -200,7 +183,7 @@ class _MakeCalendarState extends State<MakeCalendar> {
         }
 
         return Padding(
-          padding: EdgeInsets.only(left: 10, right: 10, top: 20),
+          padding: EdgeInsets.only(left: 5, right: 10, top: 20),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
@@ -215,10 +198,10 @@ class _MakeCalendarState extends State<MakeCalendar> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+              padding: EdgeInsets.fromLTRB(20, 0, 30, 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: weeks.length == 6 ? 9 : 15,
+                spacing: 15,
                 children: [
                   for (var week in weeks)
                     SizedBox(

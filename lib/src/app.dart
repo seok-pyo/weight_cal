@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
       listenable: themeController,
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
-          restorationScopeId: 'app',
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [
-            Locale('kor', ''),
+            Locale('en', ''),
           ],
           onGenerateTitle: (BuildContext context) =>
               AppLocalizations.of(context)!.appTitle,

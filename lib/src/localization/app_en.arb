@@ -1,6 +1,6 @@
 {
-  "appTitle": "weight_cal",
+  "appTitle": "Vertical",
   "@appTitle": {
-    "description": "The title of the application"
+    "description": "Simple vertical calendar for better clarity"
   }
 }
