@@ -171,24 +171,12 @@ class _MakeCalendarState extends State<MakeCalendar> {
                 child: Column(
                   children: [
                     isToday
-                        ? Center(
-                            child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
+                        ? Text('$day',
+                            style: const TextStyle(
+                              fontSize: 24,
                               color: Colors.red,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Text(
-                              '$day',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ))
+                              fontWeight: FontWeight.bold,
+                            ))
                         : Text(
                             '$day',
                             // 오늘 색상 표시
