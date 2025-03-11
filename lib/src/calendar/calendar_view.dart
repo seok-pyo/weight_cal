@@ -186,12 +186,14 @@ class _MakeCalendarState extends State<MakeCalendar> {
                           ),
                     Consumer<WeightProvider>(
                       builder: (context, value, child) {
-                        Object? weight = value
-                            .weights[DateTime(widget.year, index + 1, day)];
+                        // Object? weight = value
+                        //     .weights[DateTime(widget.year, index + 1, day)];
+                        var weight = value
+                            .getWeight(DateTime(widget.year, index + 1, day));
                         return Padding(
                           padding: EdgeInsets.only(top: 10),
                           child: Text(
-                            weight != null && weight != 0.0 ? '$weight' : '',
+                            weight != 0.0 ? '$weight' : '',
                             style: TextStyle(fontSize: 18),
                             overflow: TextOverflow.ellipsis,
                           ),

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:weight_cal/src/provider/weight_provider.dart';
 import 'package:weight_cal/src/theme/theme_controller.dart';
 import 'package:weight_cal/src/theme/theme_service.dart';
-
 import 'src/app.dart';
 
 void main() async {
@@ -13,9 +12,9 @@ void main() async {
 
   // hive init
   final directory = await getApplicationDocumentsDirectory();
-  print(directory);
   Hive.init(directory.path);
   await Hive.initFlutter();
+  final box = await Hive.openBox('weights');
 
   // theme
   final themeService = ThemeService();
@@ -25,7 +24,10 @@ void main() async {
 
   runApp(
     ChangeNotifierProvider(
-        create: (_) => WeightProvider(),
-        child: MyApp(themeController: themeController)),
+      create: (_) => WeightProvider(box),
+      child: MyApp(
+        themeController: themeController,
+      ),
+    ),
   );
 }

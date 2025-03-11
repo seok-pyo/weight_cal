@@ -20,6 +20,8 @@ class DetailPage extends StatelessWidget {
             AppBar(title: Text('${date.year}년 ${date.month}월 ${date.day}일')),
         body: Consumer<WeightProvider>(
           builder: (context, provider, child) {
+            String dateKey = provider.formatDateKey(date);
+            print(provider.weights);
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -39,24 +41,17 @@ class DetailPage extends StatelessWidget {
                           decoration: InputDecoration(
                             label: Center(
                               child: Text(
-                                provider.weights[DateTime(
-                                            date.year, date.month, date.day)] !=
-                                        null
-                                    ? provider.weights[DateTime(
-                                            date.year, date.month, date.day)]
-                                        .toString()
+                                provider.weights[dateKey] != null
+                                    ? provider.weights[dateKey].toString()
                                     : '🍀',
                               ),
                             ),
                             alignLabelWithHint: true,
-                            // floatingLabelBehavior: FloatingLabelBehavior.auto,
                             labelStyle: TextStyle(
                               fontSize: 85,
                             ),
                             border: InputBorder.none,
-                            // contentPadding: EdgeInsets.only(left: 90),
                           ),
-                          // textAlign: TextAlign.center,
                           controller: _controller,
                           keyboardType: TextInputType.text,
                           textAlign: TextAlign.center,
