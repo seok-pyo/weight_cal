@@ -1,7 +1,7 @@
 // 상태관리
 
 import 'package:flutter/material.dart';
-import 'package:weight_cal/src/theme/theme_service.dart';
+import 'package:vertical/src/theme/theme_service.dart';
 
 class ThemeController extends ChangeNotifier {
   final ThemeService _themeService;

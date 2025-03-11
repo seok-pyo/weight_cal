@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:weight_cal/src/calendar/calendar_view.dart';
-import 'package:weight_cal/src/theme/theme_controller.dart';
+import 'package:vertical/src/theme/theme_controller.dart';
+import 'package:vertical/src/calendar/calendar_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({

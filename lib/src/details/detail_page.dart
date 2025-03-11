@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weight_cal/src/provider/weight_provider.dart';
+import 'package:vertical/src/provider/weight_provider.dart';
 
 class DetailPage extends StatelessWidget {
   final DateTime date;

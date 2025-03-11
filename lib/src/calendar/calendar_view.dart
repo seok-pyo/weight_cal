@@ -1,9 +1,9 @@
-// import 'package:weight_cal/src/settings/settings_view.dart';
+// import 'package:vertical/src/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:weight_cal/src/details/detail_page.dart';
-import 'package:weight_cal/src/provider/weight_provider.dart';
-import 'package:weight_cal/src/theme/theme_controller.dart';
+import 'package:vertical/src/details/detail_page.dart';
+import 'package:vertical/src/provider/weight_provider.dart';
+import 'package:vertical/src/theme/theme_controller.dart';
 
 class CalendarView extends StatelessWidget {
   final int year;
