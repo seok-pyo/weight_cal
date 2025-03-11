@@ -65,6 +65,12 @@ class DetailPage extends StatelessWidget {
                           if (double.tryParse(_controller.text) == null) {
                             return;
                           }
+                          if (provider.weights[dateKey] != null) {
+                            // remove existed one.
+                            // print("before: ${provider.weights}");
+                            provider.weights.remove(dateKey);
+                            // print("after: ${provider.weights}");
+                          }
                           double weight =
                               double.tryParse(_controller.text) ?? 0.0;
                           Provider.of<WeightProvider>(context, listen: false)
