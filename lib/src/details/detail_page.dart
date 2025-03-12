@@ -21,7 +21,8 @@ class DetailPage extends StatelessWidget {
         body: Consumer<WeightProvider>(
           builder: (context, provider, child) {
             String dateKey = provider.formatDateKey(date);
-            print(provider.weights);
+            double weight = provider.getWeight(date);
+
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -41,9 +42,7 @@ class DetailPage extends StatelessWidget {
                           decoration: InputDecoration(
                             label: Center(
                               child: Text(
-                                provider.weights[dateKey] != null
-                                    ? provider.weights[dateKey].toString()
-                                    : '🍀',
+                                weight == 0.0 ? '0' : weight.toString(),
                               ),
                             ),
                             alignLabelWithHint: true,
@@ -60,24 +59,43 @@ class DetailPage extends StatelessWidget {
                       SizedBox(
                         height: 30,
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (double.tryParse(_controller.text) == null) {
-                            return;
-                          }
-                          if (provider.weights[dateKey] != null) {
-                            // remove existed one.
-                            // print("before: ${provider.weights}");
-                            provider.weights.remove(dateKey);
-                            // print("after: ${provider.weights}");
-                          }
-                          double weight =
-                              double.tryParse(_controller.text) ?? 0.0;
-                          Provider.of<WeightProvider>(context, listen: false)
-                              .saveWeight(date, weight);
-                          Navigator.pop(context);
-                        },
-                        child: Text("저장"),
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              if (double.tryParse(_controller.text) == null) {
+                                return;
+                              }
+                              if (provider.weights[dateKey] != null) {
+                                // remove existed one.
+                                // print("before: ${provider.weights}");
+                                // hive에서 파일을 삭제하기 필요
+
+                                provider.deleteWeight(date);
+                                // print("after: ${provider.weights}");
+                              }
+                              double weight =
+                                  double.tryParse(_controller.text) ?? 0.0;
+                              Provider.of<WeightProvider>(context,
+                                      listen: false)
+                                  .saveWeight(date, weight);
+                              Navigator.pop(context);
+                            },
+                            child: Text("저장"),
+                          ),
+                          if (weight != 0.0)
+                            SizedBox(
+                              width: 25,
+                            ),
+                          if (weight != 0.0)
+                            ElevatedButton(
+                              onPressed: () {
+                                provider.deleteWeight(date);
+                                _controller.text = '';
+                              },
+                              child: Text("비우기"),
+                            ),
+                        ],
                       )
                     ],
                   ),
