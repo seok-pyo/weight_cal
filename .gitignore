@@ -1,0 +1,88 @@
+# ----------------------------------------
+# Dart / Flutter / Pub 관련
+# ----------------------------------------
+.dart_tool/
+.packages
+.pub/
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+build/
+**/doc/api/
+**/ios/Flutter/.last_build_id
+
+# ----------------------------------------
+# iOS 관련
+# ----------------------------------------
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/App.framework
+ios/Flutter/engine/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Runner.xcworkspace
+ios/Runner.xcuserstate
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj/*
+!ios/Runner.xcodeproj/project.pbxproj
+!ios/Runner.xcodeproj/xcshareddata/
+!ios/Runner.xcodeproj/project.xcworkspace/
+DerivedData/
+
+# ----------------------------------------
+# Android 관련
+# ----------------------------------------
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/build/
+android/build/
+android/app/debug
+android/app/profile
+android/app/release
+
+# ----------------------------------------
+# IDE 및 에디터 관련
+# ----------------------------------------
+# VS Code
+.vscode/
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Xcode
+*.xcuserstate
+
+# ----------------------------------------
+# 일반 파일들
+# ----------------------------------------
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+*.tmp
+
+# ----------------------------------------
+# 심볼 및 난독화 관련
+# ----------------------------------------
+app.*.symbols
+app.*.map.json
+
+
+linux/
+macos/
+web/
+windows/
